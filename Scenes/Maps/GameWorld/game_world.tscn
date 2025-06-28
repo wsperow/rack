@@ -1,0 +1,75 @@
+[gd_scene load_steps=16 format=3 uid="uid://cmucfo8bnt2e"]
+
+[ext_resource type="PackedScene" uid="uid://etn4uveouvnx" path="res://Scenes/Entities/Player/local_player.tscn" id="1_1545x"]
+[ext_resource type="Script" uid="uid://dpgj634renldp" path="res://Scenes/Maps/GameWorld/game_world.gd" id="1_wmxo0"]
+[ext_resource type="Texture2D" uid="uid://c71f0lr8a3bal" path="res://Assets/StylizedGrass003/Stylized_Grass_003_basecolor.jpg" id="2_62smv"]
+[ext_resource type="Texture2D" uid="uid://c264ytniaoujd" path="res://Assets/StylizedGrass003/Stylized_Grass_003_ambientOcclusion.jpg" id="3_tmfc6"]
+[ext_resource type="Texture2D" uid="uid://dw26cadymnqie" path="res://Assets/StylizedGrass003/Stylized_Grass_003_height.png" id="4_1nkq5"]
+[ext_resource type="Texture2D" uid="uid://cy7033d4dg61p" path="res://Assets/StylizedGrass003/Stylized_Grass_003_normal.jpg" id="5_3fhsc"]
+[ext_resource type="Texture2D" uid="uid://bw2rvod8axk26" path="res://Assets/StylizedGrass003/Stylized_Grass_003_roughness.jpg" id="6_ijr5n"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_e13v6"]
+sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+
+[sub_resource type="Sky" id="Sky_1545x"]
+sky_material = SubResource("ProceduralSkyMaterial_e13v6")
+
+[sub_resource type="Environment" id="Environment_wmxo0"]
+background_mode = 2
+sky = SubResource("Sky_1545x")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_e13v6"]
+size = Vector3(100, 1, 100)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fnv7o"]
+albedo_texture = ExtResource("2_62smv")
+roughness_texture = ExtResource("6_ijr5n")
+normal_enabled = true
+normal_texture = ExtResource("5_3fhsc")
+ao_enabled = true
+ao_texture = ExtResource("3_tmfc6")
+heightmap_enabled = true
+heightmap_texture = ExtResource("4_1nkq5")
+uv1_scale = Vector3(100, 100, 100)
+
+[sub_resource type="BoxMesh" id="BoxMesh_1545x"]
+material = SubResource("StandardMaterial3D_fnv7o")
+size = Vector3(100, 1, 100)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wmxo0"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_fnv7o"]
+
+[node name="GameWorld" type="Node3D"]
+script = ExtResource("1_wmxo0")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_wmxo0")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Floor" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+shape = SubResource("BoxShape3D_e13v6")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor/CollisionShape3D"]
+mesh = SubResource("BoxMesh_1545x")
+
+[node name="Box" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.47654, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Box"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2043, 0)
+shape = SubResource("BoxShape3D_wmxo0")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Box/CollisionShape3D"]
+mesh = SubResource("BoxMesh_fnv7o")
+
+[node name="LocalPlayer" parent="." instance=ExtResource("1_1545x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.78351, -2.63512)

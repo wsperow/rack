@@ -1,0 +1,47 @@
+[gd_scene load_steps=5 format=3 uid="uid://b1upyx5e7lxxy"]
+
+[ext_resource type="Script" uid="uid://dnc7afkqpy1lr" path="res://Scenes/Menus/MainMenu/main_menu.gd" id="1_yo6co"]
+[ext_resource type="Theme" uid="uid://di3bayphlkspg" path="res://Scenes/Menus/MainMenu/main_menu.tres" id="2_tb3ri"]
+
+[sub_resource type="SystemFont" id="SystemFont_qolup"]
+font_names = PackedStringArray("Impact")
+
+[sub_resource type="LabelSettings" id="LabelSettings_38aua"]
+font = SubResource("SystemFont_qolup")
+font_size = 130
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_yo6co")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_right = 284.0
+offset_bottom = 137.0
+text = "RACK"
+label_settings = SubResource("LabelSettings_38aua")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 7.0
+offset_top = 150.0
+offset_right = 291.0
+offset_bottom = 347.0
+
+[node name="PlayButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_tb3ri")
+text = "Play"
+
+[node name="QuitButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_tb3ri")
+text = "Quit"
+
+[connection signal="button_up" from="VBoxContainer/PlayButton" to="." method="_on_play_button_up"]
+[connection signal="button_up" from="VBoxContainer/QuitButton" to="." method="_on_quit_button_up"]
