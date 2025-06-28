@@ -3,58 +3,15 @@
 [ext_resource type="Script" uid="uid://dgtkhxurl7346" path="res://Scenes/Entities/Player/local_player.gd" id="1_m4lju"]
 [ext_resource type="ArrayMesh" uid="uid://cxhpw5bv2c3jp" path="res://Assets/Rifle/untitled.obj" id="2_qj4e3"]
 [ext_resource type="Texture2D" uid="uid://o0hr0nf6av7t" path="res://Assets/Rifle/texture.001.png" id="3_csvtg"]
+[ext_resource type="Shader" uid="uid://rcoru058jx80" path="res://Shaders/weapon.gdshader" id="3_yb6mj"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_cwqv6"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_qj4e3"]
 
-[sub_resource type="Shader" id="Shader_yb6mj"]
-code = "// NOTE: Shader automatically converted from Godot Engine 4.4.1.stable's StandardMaterial3D.
-
-shader_type spatial;
-render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_burley, specular_schlick_ggx;
-
-uniform vec4 albedo : source_color;
-uniform sampler2D texture_albedo : source_color, filter_linear_mipmap, repeat_enable;
-uniform ivec2 albedo_texture_size;
-uniform float point_size : hint_range(0.1, 128.0, 0.1);
-
-uniform float roughness : hint_range(0.0, 1.0);
-uniform sampler2D texture_metallic : hint_default_white, filter_linear_mipmap, repeat_enable;
-uniform vec4 metallic_texture_channel;
-uniform sampler2D texture_roughness : hint_roughness_r, filter_linear_mipmap, repeat_enable;
-
-uniform float specular : hint_range(0.0, 1.0, 0.01);
-uniform float metallic : hint_range(0.0, 1.0, 0.01);
-
-uniform vec3 uv1_scale;
-uniform vec3 uv1_offset;
-uniform vec3 uv2_scale;
-uniform vec3 uv2_offset;
-
-void vertex() {
-	UV = UV * uv1_scale.xy + uv1_offset.xy;
-}
-
-void fragment() {
-	vec2 base_uv = UV;
-
-	vec4 albedo_tex = texture(texture_albedo, base_uv);
-	ALBEDO = albedo.rgb * albedo_tex.rgb;
-
-	float metallic_tex = dot(texture(texture_metallic, base_uv), metallic_texture_channel);
-	METALLIC = metallic_tex * metallic;
-	SPECULAR = specular;
-
-	vec4 roughness_texture_channel = vec4(1.0, 0.0, 0.0, 0.0);
-	float roughness_tex = dot(texture(texture_roughness, base_uv), roughness_texture_channel);
-	ROUGHNESS = roughness_tex * roughness;
-}
-"
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_wbkij"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_csvtg"]
 render_priority = 0
-shader = SubResource("Shader_yb6mj")
+shader = ExtResource("3_yb6mj")
 shader_parameter/albedo = Color(1, 1, 1, 1)
 shader_parameter/texture_albedo = ExtResource("3_csvtg")
 shader_parameter/albedo_texture_size = Vector2i(2048, 2048)
@@ -67,6 +24,7 @@ shader_parameter/uv1_scale = Vector3(1, 1, 1)
 shader_parameter/uv1_offset = Vector3(0, 0, 0)
 shader_parameter/uv2_scale = Vector3(1, 1, 1)
 shader_parameter/uv2_offset = Vector3(0, 0, 0)
+shader_parameter/fov = 90.0
 
 [node name="LocalPlayer" type="CharacterBody3D"]
 script = ExtResource("1_m4lju")
@@ -79,16 +37,24 @@ mesh = SubResource("CapsuleMesh_qj4e3")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.678597, -0.0021925)
+fov = 90.0
 
 [node name="RayCast3D" type="RayCast3D" parent="Camera3D"]
 target_position = Vector3(0, 0, -100)
 
-[node name="WeaponRig" type="Node3D" parent="."]
+[node name="WeaponRig" type="Node3D" parent="Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0158875, -0.678597, 0.0779911)
 
-[node name="Rifle" type="Node3D" parent="WeaponRig"]
+[node name="Rifle" type="Node3D" parent="Camera3D/WeaponRig"]
 transform = Transform3D(0.998563, 0, -0.0535908, 0, 1, 0, 0.0535908, 0, 0.998563, -0.0680489, -0.0207431, 0.0277107)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="WeaponRig/Rifle"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Camera3D/WeaponRig/Rifle"]
 transform = Transform3D(-8.74228e-09, 0, -0.2, 0, 0.2, 0, 0.2, 0, -8.74228e-09, 0.26784, 0.344825, -0.501887)
+cast_shadow = 0
 mesh = ExtResource("2_qj4e3")
-surface_material_override/0 = SubResource("ShaderMaterial_wbkij")
+surface_material_override/0 = SubResource("ShaderMaterial_csvtg")
+
+[node name="ShadowMesh" type="MeshInstance3D" parent="Camera3D/WeaponRig/Rifle"]
+transform = Transform3D(-8.74228e-09, 0, -0.2, 0, 0.2, 0, 0.2, 0, -8.74228e-09, 0.26784, 0.344825, -0.501887)
+cast_shadow = 3
+mesh = ExtResource("2_qj4e3")

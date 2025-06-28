@@ -8,6 +8,7 @@ const MAX_CAMERA_ANGLE: float = 90
 const MIN_CAMERA_ANGLE: float = -90
 
 @onready var camera: Camera3D = $Camera3D
+@onready var weapon_rig: Node3D = $WeaponRig
 @onready var health:= MAX_HEALTH
 
 var camera_anglev = 0
@@ -38,7 +39,7 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
 		get_tree().change_scene_to_file("res://Scenes/Menus/MainMenu/main_menu.tscn")
 	if event is InputEventMouseMotion:
-		self.rotate_y(deg_to_rad(-event.relative.x*MOUSE_SENSITIVITY))
-		var changev=-event.relative.y*MOUSE_SENSITIVITY
-		camera_anglev=clamp(camera_anglev+changev, MIN_CAMERA_ANGLE, MAX_CAMERA_ANGLE)
-		camera.rotation.x=deg_to_rad(camera_anglev)
+		self.rotate_y(deg_to_rad(-event.relative.x * MOUSE_SENSITIVITY))
+		var changev = -event.relative.y * MOUSE_SENSITIVITY
+		camera_anglev = clamp(camera_anglev+changev, MIN_CAMERA_ANGLE, MAX_CAMERA_ANGLE)
+		camera.rotation.x = deg_to_rad(camera_anglev)

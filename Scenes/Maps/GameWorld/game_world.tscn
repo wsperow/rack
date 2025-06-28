@@ -1,12 +1,8 @@
-[gd_scene load_steps=16 format=3 uid="uid://cmucfo8bnt2e"]
+[gd_scene load_steps=11 format=3 uid="uid://cmucfo8bnt2e"]
 
 [ext_resource type="PackedScene" uid="uid://etn4uveouvnx" path="res://Scenes/Entities/Player/local_player.tscn" id="1_1545x"]
 [ext_resource type="Script" uid="uid://dpgj634renldp" path="res://Scenes/Maps/GameWorld/game_world.gd" id="1_wmxo0"]
-[ext_resource type="Texture2D" uid="uid://c71f0lr8a3bal" path="res://Assets/StylizedGrass003/Stylized_Grass_003_basecolor.jpg" id="2_62smv"]
-[ext_resource type="Texture2D" uid="uid://c264ytniaoujd" path="res://Assets/StylizedGrass003/Stylized_Grass_003_ambientOcclusion.jpg" id="3_tmfc6"]
-[ext_resource type="Texture2D" uid="uid://dw26cadymnqie" path="res://Assets/StylizedGrass003/Stylized_Grass_003_height.png" id="4_1nkq5"]
-[ext_resource type="Texture2D" uid="uid://cy7033d4dg61p" path="res://Assets/StylizedGrass003/Stylized_Grass_003_normal.jpg" id="5_3fhsc"]
-[ext_resource type="Texture2D" uid="uid://bw2rvod8axk26" path="res://Assets/StylizedGrass003/Stylized_Grass_003_roughness.jpg" id="6_ijr5n"]
+[ext_resource type="Material" uid="uid://ck0rbmyi4qrry" path="res://Scenes/Maps/GameWorld/grass.tres" id="2_fnv7o"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_e13v6"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -24,19 +20,8 @@ glow_enabled = true
 [sub_resource type="BoxShape3D" id="BoxShape3D_e13v6"]
 size = Vector3(100, 1, 100)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fnv7o"]
-albedo_texture = ExtResource("2_62smv")
-roughness_texture = ExtResource("6_ijr5n")
-normal_enabled = true
-normal_texture = ExtResource("5_3fhsc")
-ao_enabled = true
-ao_texture = ExtResource("3_tmfc6")
-heightmap_enabled = true
-heightmap_texture = ExtResource("4_1nkq5")
-uv1_scale = Vector3(100, 100, 100)
-
 [sub_resource type="BoxMesh" id="BoxMesh_1545x"]
-material = SubResource("StandardMaterial3D_fnv7o")
+material = ExtResource("2_fnv7o")
 size = Vector3(100, 1, 100)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_wmxo0"]
