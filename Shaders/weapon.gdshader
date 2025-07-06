@@ -31,7 +31,7 @@ void vertex() {
 	PROJECTION_MATRIX[1][1] = -scale;
 
 	POSITION = PROJECTION_MATRIX * MODELVIEW_MATRIX * vec4(VERTEX.xyz, 1.0);
-	POSITION.z = mix(POSITION.z, 0, -0.99);
+	POSITION.z = mix(POSITION.z, 0, -0.9999);
 	
 }
 

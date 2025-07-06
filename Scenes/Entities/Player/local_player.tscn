@@ -35,26 +35,26 @@ shape = SubResource("CapsuleShape3D_cwqv6")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="PlayerModel"]
 mesh = SubResource("CapsuleMesh_qj4e3")
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.678597, -0.0021925)
+[node name="PlayerCamera" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, -0.002)
 fov = 90.0
 
-[node name="RayCast3D" type="RayCast3D" parent="Camera3D"]
+[node name="RayCast3D" type="RayCast3D" parent="PlayerCamera"]
 target_position = Vector3(0, 0, -100)
 
-[node name="WeaponRig" type="Node3D" parent="Camera3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0158875, -0.678597, 0.0779911)
+[node name="WeaponRig" type="Node3D" parent="PlayerCamera"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0548677, -0.678597, 0.100759)
 
-[node name="Rifle" type="Node3D" parent="Camera3D/WeaponRig"]
-transform = Transform3D(0.998563, 0, -0.0535908, 0, 1, 0, 0.0535908, 0, 0.998563, -0.0680489, -0.0207431, 0.0277107)
+[node name="Rifle" type="Node3D" parent="PlayerCamera/WeaponRig"]
+transform = Transform3D(0.998563, 0, -0.0535908, 0, 1, 0, 0.0535908, 0, 0.998563, -0.0680184, -0.0323932, 0.0737098)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Camera3D/WeaponRig/Rifle"]
+[node name="VisualMesh" type="MeshInstance3D" parent="PlayerCamera/WeaponRig/Rifle"]
 transform = Transform3D(-8.74228e-09, 0, -0.2, 0, 0.2, 0, 0.2, 0, -8.74228e-09, 0.26784, 0.344825, -0.501887)
 cast_shadow = 0
 mesh = ExtResource("2_qj4e3")
 surface_material_override/0 = SubResource("ShaderMaterial_csvtg")
 
-[node name="ShadowMesh" type="MeshInstance3D" parent="Camera3D/WeaponRig/Rifle"]
+[node name="ShadowMesh" type="MeshInstance3D" parent="PlayerCamera/WeaponRig/Rifle"]
 transform = Transform3D(-8.74228e-09, 0, -0.2, 0, 0.2, 0, 0.2, 0, -8.74228e-09, 0.26784, 0.344825, -0.501887)
 cast_shadow = 3
 mesh = ExtResource("2_qj4e3")
