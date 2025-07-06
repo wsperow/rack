@@ -26,10 +26,8 @@ const AIM_SPEED: Array[float] = [
 @onready var camera: Camera3D = $PlayerCamera
 @onready var weapon_rig: Node3D = $PlayerCamera/WeaponRig
 @onready var health := MAX_HEALTH
-@onready var weapons: Array[Node3D] = [
-	$PlayerCamera/WeaponRig/Rifle
-]
 
+var weapons: Array[Node3D]
 var weapon_visual_meshes: Array[MeshInstance3D]
 var weapon_shader_materials: Array[ShaderMaterial]
 var change_x: float
@@ -40,6 +38,8 @@ var is_ads: bool
 
 func _ready() -> void:
 	camera.fov = MAIN_CAM_FOV
+	for weapon in weapon_rig.get_children():
+		weapons.append(weapon)
 	for weapon in weapons:
 		weapon_visual_meshes.append(weapon.find_child("VisualMesh"))
 	for mesh in weapon_visual_meshes:
